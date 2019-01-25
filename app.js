@@ -1,16 +1,25 @@
 const
   path = require('path'),
   express = require('express'),
-  bodyParser = require('body-parser');
+  bodyParser = require('body-parser'),
+  expressHandlebars = require('express-handlebars');
 
 const app = express();
 
-app.set('view engine', 'pug');
+// app.set('view engine', 'pug');
+
+app.engine(
+  'hbs',
+  expressHandlebars({
+    payoutsDir: 'views/layout/',
+    defaultLayout: 'main-layout',
+    extname: 'hbs'
+  })
+);
+app.set('view engine', 'hbs');
 
 const adminData = require('./routes/admin'),
   shopRoutes = require('./routes/shop');
-
-const rootDir = require('./util/path');
 
 app.use(bodyParser.urlencoded({
   extended: false
@@ -23,7 +32,9 @@ app.use(shopRoutes);
 app.use((req, res) => {
   res
     .status(404)
-    .render('404', { pageTitle: 'Page not found' });
+    .render('404', {
+      pageTitle: 'Page not found'
+    });
 });
 
 app.listen(3000);

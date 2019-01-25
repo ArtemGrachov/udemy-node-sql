@@ -1,22 +1,24 @@
 const
   path = require('path'),
   express = require('express'),
-  bodyParser = require('body-parser'),
-  expressHandlebars = require('express-handlebars');
+  bodyParser = require('body-parser');
+  // expressHandlebars = require('express-handlebars');
 
 const app = express();
 
 // app.set('view engine', 'pug');
 
-app.engine(
-  'hbs',
-  expressHandlebars({
-    payoutsDir: 'views/layout/',
-    defaultLayout: 'main-layout',
-    extname: 'hbs'
-  })
-);
-app.set('view engine', 'hbs');
+// app.engine(
+//   'hbs',
+//   expressHandlebars({
+//     payoutsDir: 'views/layout/',
+//     defaultLayout: 'main-layout',
+//     extname: 'hbs'
+//   })
+// );
+// app.set('view engine', 'hbs');
+
+app.set('view engine', 'ejs');
 
 const adminData = require('./routes/admin'),
   shopRoutes = require('./routes/shop');

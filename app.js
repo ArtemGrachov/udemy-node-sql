@@ -8,6 +8,8 @@ const app = express();
 const adminRoutes = require('./routes/admin'),
   shopRoutes = require('./routes/shop');
 
+const rootDir = require('./util/path');
+
 app.use(bodyParser.urlencoded({
   extended: false
 }));
@@ -18,7 +20,7 @@ app.use(shopRoutes);
 app.use((req, res) => {
   res
     .status(404)
-    .sendFile(path.join(__dirname, 'views', '404.html'));
+    .sendFile(path.join(rootDir, 'views', '404.html'));
 });
 
 app.listen(3000);

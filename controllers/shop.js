@@ -10,6 +10,18 @@ exports.getProducts = (req, res) => {
   );
 };
 
+exports.getProduct = (req, res, next) => {
+  console.log('getpr', req.params)
+  const productId = req.params.productId;
+  Product.findById(productId, product => {
+    res.render('shop/product-detail', {
+      pageTitle: product.title,
+      path: '/products',
+      product: product
+    })
+  })
+}
+
 exports.getIndex = (req, res) => {
   Product.fetchAll(
     products => res.render('shop/index', {
@@ -31,5 +43,12 @@ exports.getCheckout = (req, res) => {
   res.render('shop/checkout', {
     pageTitle: 'Checkout',
     path: 'shop/checkout'
+  });
+};
+
+exports.getOrders = (req, res) => {
+  res.render('shop/orders', {
+    pageTitle: 'Orders',
+    path: 'shop/orders'
   });
 };

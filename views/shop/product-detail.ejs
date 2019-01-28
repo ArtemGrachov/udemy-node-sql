@@ -5,8 +5,20 @@
 <body>
   <%- include('../includes/navigation.ejs') %>
 
-  <h1>
-    Shop product-detail
-  </h1>
+  <main class="centered">
+    <h1><%= product.title %></h1>
+    <hr>
+    <div>
+      <img src="<%= product.imageUrl %>" alt="<%= product.title %>" />
+    </div>
+    <h2><%= product.price %></h2>
+    <p><%= product.description %></p>
+    <form action="/cart" method="POST">
+      <button class="btn" type="submit">
+        Add to cart
+      </button>
+      <input type="hidden" name="product.id" value="<%= product.id %>" />
+    </form>
+  </main>
 
 <%- include('../includes/end.ejs') %>

@@ -5,7 +5,7 @@ const
 exports.getProducts = (req, res) => {
   Product
     .fetchAll()
-    .then(([rows, fieldData]) => {
+    .then(([rows]) => {
       res.render('shop/product-list', {
         products: rows,
         pageTitle: 'All products',
@@ -17,13 +17,15 @@ exports.getProducts = (req, res) => {
 
 exports.getProduct = (req, res) => {
   const productId = req.params.productId;
-  Product.findById(productId, product => {
-    res.render('shop/product-detail', {
-      pageTitle: product.title,
-      path: '/products',
-      product: product
+  Product.findById(productId)
+    .then(([product]) => {
+      res.render('shop/product-detail', {
+        pageTitle: product.title,
+        path: '/products',
+        product: product[0]
+      })
     })
-  })
+    .catch(err => console.log(err));
 }
 
 exports.getIndex = (req, res) => {

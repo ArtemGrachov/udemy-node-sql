@@ -16,7 +16,7 @@ exports.getProducts = (req, res) => {
 
 exports.getProduct = (req, res) => {
   const productId = req.params.productId;
-  
+
   Product.findById(productId)
     .then(product => {
       res.render('shop/product-detail', {
@@ -41,25 +41,21 @@ exports.getIndex = (req, res) => {
 };
 
 exports.getCart = (req, res) => {
-  Cart.getCart(cart => {
-    Product.fetchAll(products => {
-      const cartProducts = [];
-      for (product of products) {
-        const cartProductData = cart.products.find(prod => prod.id === product.id)
-        if (cartProductData) {
-          cartProducts.push({
-            productData: product,
-            qty: cartProductData.qty
+  req
+    .user
+    .getCart()
+    .then(cart => {
+      return cart
+        .getProducts()
+        .then(products => {
+          res.render('shop/cart', {
+            pageTitle: 'Your cart',
+            path: 'shop/cart',
+            products: products
           });
-        }
-      }
-      res.render('shop/cart', {
-        pageTitle: 'Your cart',
-        path: 'shop/cart',
-        products: cartProducts
-      });
+        });
     })
-  })
+    .catch(err => console.log(err));
 };
 
 exports.getCheckout = (req, res) => {

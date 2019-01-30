@@ -4,7 +4,7 @@ const
   bodyParser = require('body-parser');
 
 const app = express();
-const db = require('./util/database');
+const sequelize = require('./util/database');
 
 app.set('view engine', 'ejs');
 
@@ -22,5 +22,8 @@ app.use('/admin', adminRoutes);
 app.use(shopRoutes);
 
 app.use(errorController.get404);
+
+sequelize.sync()
+  .catch(err => console.log(err));
 
 app.listen(3000);

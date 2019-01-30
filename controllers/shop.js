@@ -4,25 +4,25 @@ const
 
 exports.getProducts = (req, res) => {
   Product
-    .fetchAll()
-    .then(([rows]) => {
+    .findAll()
+    .then(products => {
       res.render('shop/product-list', {
-        products: rows,
+        products: products,
         pageTitle: 'All products',
-        path: 'products'
+        path: '/'
       })
     })
-    .catch(err => console.log(err))
 };
 
 exports.getProduct = (req, res) => {
   const productId = req.params.productId;
+  
   Product.findById(productId)
-    .then(([product]) => {
+    .then(product => {
       res.render('shop/product-detail', {
         pageTitle: product.title,
         path: '/products',
-        product: product[0]
+        product: product
       })
     })
     .catch(err => console.log(err));
@@ -30,15 +30,14 @@ exports.getProduct = (req, res) => {
 
 exports.getIndex = (req, res) => {
   Product
-    .fetchAll()
-    .then(([rows, fieldData]) => {
+    .findAll()
+    .then(products => {
       res.render('shop/product-list', {
-        products: rows,
+        products: products,
         pageTitle: 'All products',
         path: '/'
       })
     })
-    .catch(err => console.log(err))
 };
 
 exports.getCart = (req, res) => {

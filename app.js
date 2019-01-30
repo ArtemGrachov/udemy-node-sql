@@ -20,7 +20,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use((req, res, next) => {
   User.findById(1)
     .then(user => {
-      res.user = user;
+      req.user = user;
       next();
     })
     .catch(err => console.log(err));
@@ -44,7 +44,7 @@ User.hasMany(Product);
 
 sequelize.sync()
   .then(result => {
-    User
+    return User
       .findById(1)
   })
   .then(user => {
